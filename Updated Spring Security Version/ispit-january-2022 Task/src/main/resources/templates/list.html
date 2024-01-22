@@ -7,20 +7,20 @@
 
 <div>
     <!-- The form below should invoke the method TaskController.showNews -->
-    <form id="filter-form">
+    <form id="filter-form" method="get" action="/">
         <label for="f1">Due in days: </label>
-        <input id="f1" type="number" name=""/>
+        <input id="f1" type="number" name="lessThanDayBeforeDueDate"/>
         <label for="f2">Assignee</label>
-        <select id="f2" name="">
+        <select id="f2" name="assigneeId">
             <option value="">All</option>
             <!-- For each user you should have one <option> like below  -->
-            <option> [user.username]</option>
+            <option th:each="user : ${users}" th:text="${user.username}" th:value="${user.id}"> [user.username]</option>
         </select>
         <button id="filter" type="submit">Filter</button>
     </form>
     <div>
         <!-- TaskController.showAdd (Only ADMIN can see this element)-->
-        <a class="add-item">
+        <a class="add-item" href="/tasks/add">
             Add
         </a>
     </div>
@@ -33,26 +33,28 @@
             <th>Actions</th>
         </tr>
         <!-- For each tasks you should have one <tr> like below -->
-        <tr class="item">
-            <td>[tasks.title]</td>
-            <td>[tasks.description]</td>
-            <td>[tasks.category]</td>
+        <tr class="item" th:each="task : ${tasks}">
+            <td th:text="${task.title}">[tasks.title]</td>
+            <td th:text="${task.description}">[tasks.description]</td>
+            <td th:text="${task.category}">[tasks.category]</td>
             <td>
                 <!-- For each of the task.assignees show the following element-->
-                <span class="item-rel"> [assignee.username]</span>
+                <span class="item-rel" th:each="asignee : ${task.assignees}" th:text="${asignee.username}"> [assignee.username]</span>
             </td>
             <td>
                 <!-- TaskController.delete (Only MANAGER can see this element)-->
-                <form>
+                <form method="post" th:action="@{'/tasks/{id}/delete' (id=${task.id})}">
                     <button type="submit" class="delete-item">Delete</button>
                 </form>
                 <!-- TaskController.showEdit (Only MANAGER can see this element)-->
-                <a class="edit-item">Edit</a>
+                <a class="edit-item" th:href="@{'/tasks/{id}/edit' (id=${task.id})}">Edit</a>
 
                 <!-- TaskController.markDone (Visible only when the task is not done)-->
-                <form>
-                    <button class="change-item">Mark as done</button>
-                </form>
+                <th:block th:if="${task.done} == false">
+                    <form method="post" th:action="@{'/tasks/{id}/mark_done' (id=${task.id})}">
+                        <button class="change-item">Mark as done</button>
+                    </form>
+                </th:block>
             </td>
         </tr>
     </table>

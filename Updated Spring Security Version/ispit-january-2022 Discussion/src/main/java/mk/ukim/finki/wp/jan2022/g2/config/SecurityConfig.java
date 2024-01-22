@@ -1,6 +1,9 @@
 package mk.ukim.finki.wp.jan2022.g2.config;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 
 /**
  * This class is used to configure user login on path '/login' and logout on path '/logout'.
@@ -12,6 +15,13 @@ package mk.ukim.finki.wp.jan2022.g2.config;
  * For login the employees from the database should be used, where username should be the email.
  */
 
+@Configuration
 public class SecurityConfig {
+
+    @Bean
+    // TODO: If you are implementing the security requirements, remove this following bean creation
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().anyRequest();
+    }
 
 }

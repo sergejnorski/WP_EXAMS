@@ -4,11 +4,58 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b781f527-86b2-4126-aecd-1b1d244169ca" name="Changes" comment="" />
+    <list default="true" id="b781f527-86b2-4126-aecd-1b1d244169ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/config/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/config/DataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/model/Discussion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/model/Discussion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/repository/DiscussionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/repository/DiscussionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/service/impl/DiscussionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/service/impl/DiscussionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/web/DiscussionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/java/mk/ukim/finki/wp/jan2022/g2/web/DiscussionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/resources/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/resources/templates/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/resources/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Discussion/src/main/resources/templates/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/config/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/config/DataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/repository/TaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/service/impl/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/service/impl/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/web/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/java/mk/ukim/finki/wp/jan2022/g1/web/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/resources/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/resources/templates/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/resources/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2022 Task/src/main/resources/templates/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/ExampleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/ExampleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/config/DataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/config/DataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/model/Candidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/model/Candidate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/model/Party.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/model/Party.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/repository/CandidateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/repository/CandidateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/repository/PartyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/repository/PartyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/service/impl/CandidateServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/service/impl/CandidateServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/service/impl/PartyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/service/impl/PartyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/web/CandidatesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/java/mk/ukim/finki/wp/jan2023/web/CandidatesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/resources/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/resources/templates/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/resources/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ispit-january-2023 Candidates/src/main/resources/templates/list.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -22,24 +69,25 @@
     </option>
   </component>
   <component name="ProjectId" id="2Dvx3dwEczzIXDUonU2IhTI4bkH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Anastasija/Downloads/june-2022/june-2022-zip/pom.xml",
-    "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "0120a4f9196a5f9eb9f523f31f914da7"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Anastasija/Downloads/june-2022/june-2022-zip/pom.xml&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;0120a4f9196a5f9eb9f523f31f914da7&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="June2022Group1Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="g1" />
@@ -59,10 +107,22 @@
       <updated>1661593167595</updated>
       <workItem from="1661593171309" duration="88000" />
       <workItem from="1661767129692" duration="90000" />
+      <workItem from="1705942853305" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

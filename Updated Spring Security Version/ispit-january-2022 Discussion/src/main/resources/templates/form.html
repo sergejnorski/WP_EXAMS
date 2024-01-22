@@ -6,40 +6,45 @@
 <body>
 <!-- The form should submit to DiscussionController.create or DiscussionController.update,
      depending on whether we are creating or editing an entity -->
-<form>
+<form method="post" th:action="${discussionEdit != null} ? @{'/discussions/{id}' (id=${discussionEdit.id})} : '/discussions'">
     <div>
         <label for="f1">Title</label>
         <input type="text"
                id="f1"
-               name=""
+               name="title"
+               th:value="${discussionEdit?.title}"
                required>
     </div>
     <div>
         <label for="f2">Description</label>
         <input type="text"
                id="f2"
-               name=""
+               name="description"
+               th:value="${discussionEdit?.description}"
                required>
     </div>
     <div>
         <label for="f6">Due Date</label>
         <input type="date"
                id="f6"
-               name=""
+               name="dueDate"
+               th:value="${discussionEdit?.dueDate}"
                required>
     </div>
     <div>
         <label>Tag</label><br/>
-        <select id="f4" name="">
+        <select id="f4" name="discussionTag">
             <!-- For each tag you should have one <option> like below  -->
-            <option> [tag_name]</option>
+            <option th:each="tag : ${tags}" th:text="${tag}" th:value="${tag}"
+            th:selected="${tag} == ${discussionEdit?.tag}"> [tag_name]</option>
         </select>
     </div>
     <div>
         <label>Participants</label><br/>
-        <select id="f5" name="" multiple>
+        <select id="f5" name="participants" multiple>
             <!-- For each participant you should have one <option> like below  -->
-            <option> [participant.username]</option>
+            <option th:each="participant : ${users}" th:text="${participant.username}" th:value="${participant.id}"
+            th:selected="${discussionEdit?.participants?.contains(participant)}"> [participant.username]</option>
         </select>
     </div>
 

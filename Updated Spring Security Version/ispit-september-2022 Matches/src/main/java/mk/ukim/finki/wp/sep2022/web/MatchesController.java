@@ -1,14 +1,24 @@
 package mk.ukim.finki.wp.sep2022.web;
 
 import mk.ukim.finki.wp.sep2022.model.MatchType;
+import mk.ukim.finki.wp.sep2022.service.MatchLocationService;
 import mk.ukim.finki.wp.sep2022.service.MatchService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class MatchesController {
 
     private final MatchService matchService;
+    private final MatchLocationService matchLocationService;
 
-    public MatchesController(MatchService service) {
+    public MatchesController(MatchService service, MatchLocationService matchLocationService) {
         this.matchService = service;
+        this.matchLocationService = matchLocationService;
     }
 
     /**
@@ -23,13 +33,20 @@ public class MatchesController {
      * @param type
      * @return The view "list.html".
      */
-    public String showMatches(Double price, MatchType type) {
+    @GetMapping(path = {"/","/matches"})
+    public String showMatches(@RequestParam(required = false) Double price,
+                              @RequestParam(required = false) MatchType type,
+                              Model model) {
         if (price == null && type == null) {
-            this.matchService.listAllMatches();
+            model.addAttribute("matches",this.matchService.listAllMatches());
         } else {
-            this.matchService.listMatchesWithPriceLessThanAndType(price, type);
+            model.addAttribute("matches",this.matchService.listMatchesWithPriceLessThanAndType(price, type));
         }
-        return "";
+
+        model.addAttribute("types",MatchType.values());
+        model.addAttribute("locations",matchLocationService.listAll());
+
+        return "list";
     }
 
     /**
@@ -38,8 +55,12 @@ public class MatchesController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/matches/add")
+    public String showAdd(Model model) {
+        model.addAttribute("types",MatchType.values());
+        model.addAttribute("locations",matchLocationService.listAll());
+
+        return "form";
     }
 
     /**
@@ -49,9 +70,14 @@ public class MatchesController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        this.matchService.findById(id);
-        return "";
+    @GetMapping("/matches/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+        model.addAttribute("matchEdit",this.matchService.findById(id));
+        model.addAttribute("types",MatchType.values());
+        model.addAttribute("locations",matchLocationService.listAll());
+
+        return "form";
     }
 
     /**
@@ -61,9 +87,14 @@ public class MatchesController {
      *
      * @return The view "list.html".
      */
-    public String create(String name, String description, Double price, MatchType type, Long location) {
+    @PostMapping("/matches")
+    public String create(@RequestParam String name,
+                         @RequestParam String description,
+                         @RequestParam Double price,
+                         @RequestParam MatchType type,
+                         @RequestParam Long location) {
         this.matchService.create(name, description, price, type, location);
-        return "";
+        return "redirect:/matches";
     }
 
     /**
@@ -73,9 +104,15 @@ public class MatchesController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id, String name, String description, Double price, MatchType type, Long location) {
+    @PostMapping("/matches/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String name,
+                         @RequestParam String description,
+                         @RequestParam Double price,
+                         @RequestParam MatchType type,
+                         @RequestParam Long location) {
         this.matchService.update(id, name, description, price, type, location);
-        return "";
+        return "redirect:/matches";
     }
 
     /**
@@ -85,9 +122,10 @@ public class MatchesController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/matches/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.matchService.delete(id);
-        return "";
+        return "redirect:/matches";
     }
 
     /**
@@ -97,8 +135,9 @@ public class MatchesController {
      *
      * @return The view "list.html".
      */
-    public String follow(Long id) {
+    @PostMapping("/matches/{id}/follow")
+    public String follow(@PathVariable Long id) {
         this.matchService.follow(id);
-        return "";
+        return "redirect:/matches";
     }
 }

@@ -1,19 +1,19 @@
 package mk.ukim.finki.wp.jan2022.g1.config;
 
 
+import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.jan2022.g1.service.TaskService;
 import mk.ukim.finki.wp.jan2022.g1.model.TaskCategory;
 import mk.ukim.finki.wp.jan2022.g1.model.User;
 import mk.ukim.finki.wp.jan2022.g1.service.UserService;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
+@Component
 public class DataInitializer {
 
     private final UserService userService;
@@ -31,6 +31,7 @@ public class DataInitializer {
         return TaskCategory.BUG;
     }
 
+    @PostConstruct
     public void initData() {
         this.userService.create("user" + 0, "pass" + 0, "ROLE_MANAGER");
         for (int i = 1; i < 6; i++) {

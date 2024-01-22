@@ -4,14 +4,16 @@ import mk.ukim.finki.wp.jan2022.g2.model.Discussion;
 import mk.ukim.finki.wp.jan2022.g2.model.DiscussionTag;
 import mk.ukim.finki.wp.jan2022.g2.service.DiscussionService;
 import mk.ukim.finki.wp.jan2022.g2.service.UserService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
+
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class DiscussionController {
 
     private final DiscussionService service;
@@ -29,7 +31,10 @@ public class DiscussionController {
      *
      * @return The view "list.html".
      */
-    public String showList(Long participantId,Integer daysUntilClosing)
+    @GetMapping(path = {"/","/discussions"})
+    public String showList(@RequestParam(required = false) Long participantId,
+                           @RequestParam(required = false)Integer daysUntilClosing,
+                           Model model)
     {
         List<Discussion> discussions;
         if (participantId == null && daysUntilClosing == null) {
@@ -37,7 +42,12 @@ public class DiscussionController {
         } else {
             discussions = this.service.filter(participantId, daysUntilClosing);
         }
-        return "";
+
+        model.addAttribute("discussions",discussions);
+        model.addAttribute("tags",DiscussionTag.values());
+        model.addAttribute("users", userService.listAll());
+
+        return "list";
     }
 
     /**
@@ -46,9 +56,12 @@ public class DiscussionController {
      *
      * @return The view "form.html".
      */
-    public String showAdd()
-    {
-        return "";
+    @GetMapping("/discussions/add")
+    public String showAdd(Model model) {
+        model.addAttribute("tags",DiscussionTag.values());
+        model.addAttribute("users",userService.listAll());
+
+        return "form";
     }
 
     /**
@@ -58,8 +71,15 @@ public class DiscussionController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        return "";
+    @GetMapping("/discussions/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+        model.addAttribute("discussionEdit",service.findById(id));
+
+        model.addAttribute("tags",DiscussionTag.values());
+        model.addAttribute("users",userService.listAll());
+
+        return "form";
     }
     /**
      * This method should create an entity given the arguments it takes.
@@ -68,10 +88,15 @@ public class DiscussionController {
      *
      * @return The view "list.html".
      */
-    public String create(String title,String description,DiscussionTag discussionTag,List<Long> participants,String dueDate)
+    @PostMapping("/discussions")
+    public String create(@RequestParam String title,
+                         @RequestParam String description,
+                         @RequestParam DiscussionTag discussionTag,
+                         @RequestParam List<Long> participants,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String dueDate)
     {
         this.service.create(title, description, discussionTag, participants, LocalDate.parse(dueDate));
-        return "";
+        return "redirect:/discussions";
     }
 
     /**
@@ -81,9 +106,14 @@ public class DiscussionController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id,String title,String description, DiscussionTag discussionTag,List<Long> participants) {
+    @PostMapping("/discussions/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String title,
+                         @RequestParam String description,
+                         @RequestParam DiscussionTag discussionTag,
+                         @RequestParam List<Long> participants) {
         this.service.update(id, title, description, discussionTag, participants);
-        return "";
+        return "redirect:/discussions";
     }
 
     /**
@@ -93,9 +123,10 @@ public class DiscussionController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/discussions/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.service.delete(id);
-        return "";
+        return "redirect:/discussions";
     }
 
     /**
@@ -105,9 +136,10 @@ public class DiscussionController {
      *
      * @return The view "list.html".
      */
-    public String markPopular(Long id)
+    @PostMapping("/discussions/{id}/mark_popular")
+    public String markPopular(@PathVariable Long id)
     {
         this.service.markPopular(id);
-        return "";
+        return "redirect:/discussions";
     }
 }

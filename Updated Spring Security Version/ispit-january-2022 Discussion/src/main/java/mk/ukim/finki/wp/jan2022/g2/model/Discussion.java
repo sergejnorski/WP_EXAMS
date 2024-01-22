@@ -1,9 +1,11 @@
 package mk.ukim.finki.wp.jan2022.g2.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
-
+@Entity
 public class Discussion {
 
     public Discussion() {
@@ -17,6 +19,8 @@ public class Discussion {
         this.dueDate = dueDate;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private LocalDate dueDate;
@@ -25,8 +29,10 @@ public class Discussion {
 
     private String description;
 
+    @Enumerated(EnumType.STRING)
     private DiscussionTag discussionTag;
 
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> participants;
 
     private Boolean popular = false;

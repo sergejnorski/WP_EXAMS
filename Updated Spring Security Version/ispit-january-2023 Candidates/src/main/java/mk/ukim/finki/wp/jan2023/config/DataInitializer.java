@@ -1,11 +1,15 @@
 package mk.ukim.finki.wp.jan2023.config;
 
+import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.jan2023.model.Gender;
 import mk.ukim.finki.wp.jan2023.service.CandidateService;
 import mk.ukim.finki.wp.jan2023.service.PartyService;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class DataInitializer {
 
     private final PartyService partyService;
@@ -22,6 +26,7 @@ public class DataInitializer {
         return Gender.FEMALE;
     }
 
+    @PostConstruct
     public void initData() {
         for (int i = 1; i < 6; i++) {
             this.partyService.create("Party: " + i);

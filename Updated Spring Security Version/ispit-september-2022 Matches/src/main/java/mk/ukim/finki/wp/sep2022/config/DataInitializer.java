@@ -1,9 +1,12 @@
 package mk.ukim.finki.wp.sep2022.config;
 
+import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.sep2022.model.MatchType;
 import mk.ukim.finki.wp.sep2022.service.MatchLocationService;
 import mk.ukim.finki.wp.sep2022.service.MatchService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DataInitializer {
 
     private final MatchLocationService matchLocationService;
@@ -21,6 +24,7 @@ public class DataInitializer {
         return MatchType.COMPETITIVE;
     }
 
+    @PostConstruct
     public void initData() {
         for (int i = 1; i < 6; i++) {
             this.matchLocationService.create("Match Location: " + i);

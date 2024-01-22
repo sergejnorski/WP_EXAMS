@@ -14,7 +14,7 @@
 	<name>January 2022 group 2</name>
 	<description>January 2022 group 2</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>19</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

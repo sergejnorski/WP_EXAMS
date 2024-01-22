@@ -2,15 +2,26 @@ package mk.ukim.finki.wp.jan2023.web;
 
 import mk.ukim.finki.wp.jan2023.model.Gender;
 import mk.ukim.finki.wp.jan2023.service.CandidateService;
+import mk.ukim.finki.wp.jan2023.service.PartyService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
+@Controller
 public class CandidatesController {
 
     private final CandidateService candidateService;
+    private final PartyService partyService;
 
-    public CandidatesController(CandidateService candidateService) {
+    public CandidatesController(CandidateService candidateService, PartyService partyService) {
         this.candidateService = candidateService;
+        this.partyService = partyService;
     }
 
     /**
@@ -25,13 +36,20 @@ public class CandidatesController {
      * @param gender
      * @return The view "list.html".
      */
-    public String showCandidates(Integer years, Gender gender) {
+    @GetMapping(path = {"/","/candidates"})
+    public String showCandidates(@RequestParam(required = false) Integer years,
+                                 @RequestParam(required = false) Gender gender,
+                                 Model model) {
         if (years == null && gender == null) {
-            this.candidateService.listAllCandidates();
+            model.addAttribute("candidates",this.candidateService.listAllCandidates());
         } else {
-            this.candidateService.listCandidatesYearsMoreThanAndGender(years, gender);
+            model.addAttribute("candidates",this.candidateService.listCandidatesYearsMoreThanAndGender(years, gender));
         }
-        return "";
+
+        model.addAttribute("genders",Gender.values());
+        model.addAttribute("parties",partyService.listAll());
+
+        return "list";
     }
 
     /**
@@ -40,8 +58,12 @@ public class CandidatesController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/candidates/add")
+    public String showAdd(Model model) {
+        model.addAttribute("genders",Gender.values());
+        model.addAttribute("parties",partyService.listAll());
+
+        return "form";
     }
 
     /**
@@ -51,9 +73,15 @@ public class CandidatesController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        this.candidateService.findById(id);
-        return "";
+    @GetMapping("/candidates/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+        model.addAttribute("candidateEdit",this.candidateService.findById(id));
+
+        model.addAttribute("genders",Gender.values());
+        model.addAttribute("parties",partyService.listAll());
+
+        return "form";
     }
 
     /**
@@ -63,9 +91,14 @@ public class CandidatesController {
      *
      * @return The view "list.html".
      */
-    public String create(String name, String bio, LocalDate dateOfBirth, Gender gender, Long party) {
+    @PostMapping("/candidates")
+    public String create(@RequestParam String name,
+                         @RequestParam String bio,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateOfBirth,
+                         @RequestParam Gender gender,
+                         @RequestParam Long party) {
         this.candidateService.create(name, bio, dateOfBirth, gender, party);
-        return "";
+        return "redirect:/candidates";
     }
 
     /**
@@ -75,9 +108,15 @@ public class CandidatesController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id, String name, String bio, LocalDate dateOfBirth, Gender gender, Long party) {
+    @PostMapping("/candidates/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String name,
+                         @RequestParam String bio,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate dateOfBirth,
+                         @RequestParam Gender gender,
+                         @RequestParam Long party) {
         this.candidateService.update(id, name, bio, dateOfBirth, gender, party);
-        return "";
+        return "redirect:/candidates";
     }
 
     /**
@@ -87,9 +126,10 @@ public class CandidatesController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/candidates/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.candidateService.delete(id);
-        return "";
+        return "redirect:/candidates";
     }
 
     /**
@@ -99,8 +139,9 @@ public class CandidatesController {
      *
      * @return The view "list.html".
      */
-    public String vote(Long id) {
+    @PostMapping("/candidates/{id}/vote")
+    public String vote(@PathVariable Long id) {
         this.candidateService.vote(id);
-        return "";
+        return "redirect:/candidates";
     }
 }

@@ -1,7 +1,10 @@
 package mk.ukim.finki.wp.jan2023.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
 public class Candidate {
 
     public Candidate() {
@@ -16,6 +19,8 @@ public class Candidate {
         this.votes = 0;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -24,8 +29,10 @@ public class Candidate {
 
     private LocalDate dateOfBirth;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @ManyToOne
     private Party party;
 
     private Integer votes = 0;

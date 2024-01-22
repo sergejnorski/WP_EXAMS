@@ -1,6 +1,10 @@
 package mk.ukim.finki.wp.jan2022.g1.config;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.stereotype.Component;
+
 /**
  * This class is used to configure user login on path '/login' and logout on path '/logout'.
  * The only public page in the application should be '/'.
@@ -11,7 +15,11 @@ package mk.ukim.finki.wp.jan2022.g1.config;
  * For login the users from the database should be used.
  */
 
+@Component
 public class SecurityConfig  {
-
-
+    @Bean
+    // TODO: If you are implementing the security requirements, remove this following bean creation
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().anyRequest();
+    }
 }

@@ -1,5 +1,10 @@
 package mk.ukim.finki.wp.jan2023.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Party {
 
     public Party() {
@@ -9,6 +14,8 @@ public class Party {
         this.name = name;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;

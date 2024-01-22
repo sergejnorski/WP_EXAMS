@@ -1,9 +1,11 @@
 package mk.ukim.finki.wp.jan2022.g1.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
-
+@Entity
 public class Task {
 
     public Task() {
@@ -17,7 +19,8 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-
+    @Id
+    @GeneratedValue
     private Long id;
 
     private LocalDate dueDate;
@@ -26,9 +29,10 @@ public class Task {
 
     private String description;
 
-
+    @Enumerated(EnumType.STRING)
     private TaskCategory category;
 
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<User> assignees;
 
     private Boolean done = false;

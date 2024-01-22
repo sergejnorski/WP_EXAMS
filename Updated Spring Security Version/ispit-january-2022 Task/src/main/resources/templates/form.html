@@ -6,40 +6,45 @@
 <body>
 <!-- The form should submit to TaskController.create or TaskController.update,
      depending on whether we are creating or editing an entity -->
-<form>
+<form method="post" th:action="${taskEdit != null} ? @{'/tasks/{id}' (id=${taskEdit.id})} : '/tasks'">
     <div>
         <label for="f1">Title</label>
         <input type="text"
                id="f1"
-               name=""
+               name="title"
+               th:value="${taskEdit?.title}"
                required>
     </div>
     <div>
         <label for="f2">Description</label>
         <input type="text"
                id="f2"
-               name=""
+               name="description"
+               th:value="${taskEdit?.description}"
                required>
     </div>
     <div>
         <label for="f6">Due Date</label>
         <input type="date"
                id="f6"
-               name=""
+               name="dueDate"
+               th:value="${taskEdit?.dueDate}"
                required>
     </div>
     <div>
         <label>Category</label><br/>
-        <select id="f4" name="">
+        <select id="f4" name="category">
             <!-- For each category you should have one <option> like below  -->
-            <option> [category_name]</option>
+            <option th:each="category : ${categories}" th:text="${category}" th:value="${category}"
+            th:selected="${category} == ${taskEdit?.category}"> [category_name]</option>
         </select>
     </div>
     <div>
         <label>Assignees</label><br/>
-        <select id="f5" name="" multiple>
+        <select id="f5" name="assignees" multiple>
             <!-- For each skill you should have one <option> like below  -->
-            <option> [assignee.username]</option>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"
+            th:selected="${taskEdit?.assignees?.contains(user)}"> [assignee.username]</option>
         </select>
     </div>
 

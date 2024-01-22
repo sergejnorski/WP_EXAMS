@@ -7,20 +7,20 @@
 
 <div>
     <!-- The form below should invoke the method DiscussionController.showList -->
-    <form id="filter-form">
+    <form id="filter-form" method="get" action="/">
         <label for="f1">Due in days</label>
-        <input id="f1" type="number" name=""/>
+        <input id="f1" type="number" name="daysUntilClosing"/>
         <label for="f2">Participant</label>
-        <select id="f2" name="">
+        <select id="f2" name="participantId">
             <option value="">All</option>
             <!-- For each user you should have one <option> like below  -->
-            <option> [user] </option>
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"> [user] </option>
         </select>
         <button id="filter" type="submit">Filter</button>
     </form>
     <div>
             <!-- DiscussionController.showAdd (Only MASTER can see this element)-->
-            <a href=""  class="add-item">
+            <a href="/discussions/add"  class="add-item">
                 Add
             </a>
     </div>
@@ -33,27 +33,30 @@
             <th>Actions</th>
         </tr>
         <!-- For each discussion you should have one <tr> like below -->
-        <tr class="item">
-            <td>[discussion.title]</td>
-            <td>[discussion.description]</td>
-            <td>[discussion.tag]</td>
+        <tr class="item" th:each="discussion : ${discussions}">
+            <td th:text="${discussion.title}">[discussion.title]</td>
+            <td th:text="${discussion.description}">[discussion.description]</td>
+            <td th:text="${discussion.tag}">[discussion.tag]</td>
             <td>
                 <!-- For each of the discussion.participants show the following element-->
-                <span class="item-rel"> [participant.username]</span>
+                <span class="item-rel" th:each="par : ${discussion.participants}" th:text="${par.username}"> [participant.username]</span>
             </td>
             <td>
 
                     <!-- DiscussionController.delete (Only MASTER can see this element)-->
-                    <form>
+                    <form method="post" th:action="@{'/discussions/{id}/delete' (id=${discussion.id})}">
                         <button type="submit"  class="delete-item">Delete</button>
                     </form>
                     <!-- DiscussionController.showEdit (Only MASTER can see this element)-->
-                    <a class="edit-item">Edit</a>
+                    <a class="edit-item" th:href="@{'/discussions/{id}/edit' (id=${discussion.id})}">Edit</a>
 
                 <!-- DiscussionController.markPopular (Visible only when the discussion is not already popular)-->
-                <form>
-                    <button class="change-item">Mark as popular</button>
-                </form>
+                <th:block th:if="${discussion.popular==false}">
+                    <form method="post" th:action="@{'/discussions/{id}/mark_popular' (id=${discussion.id})}">
+                        <button class="change-item">Mark as popular</button>
+                    </form>
+                </th:block>
+
             </td>
         </tr>
     </table>

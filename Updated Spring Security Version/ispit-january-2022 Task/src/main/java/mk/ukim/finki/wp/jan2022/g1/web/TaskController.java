@@ -4,6 +4,8 @@ import mk.ukim.finki.wp.jan2022.g1.model.Task;
 import mk.ukim.finki.wp.jan2022.g1.model.TaskCategory;
 import mk.ukim.finki.wp.jan2022.g1.service.TaskService;
 import mk.ukim.finki.wp.jan2022.g1.service.UserService;
+import net.sourceforge.htmlunit.xpath.operations.Mod;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class TaskController {
 
     private final TaskService service;
@@ -28,17 +31,22 @@ public class TaskController {
      *
      * @return The view "list.html".
      */
-
-    public String showList(Integer lessThanDayBeforeDueDate,Long assigneeId)
-
-    {
+    @GetMapping(path = {"/","/tasks"})
+    public String showList(@RequestParam(required = false) Integer lessThanDayBeforeDueDate,
+                           @RequestParam(required = false) Long assigneeId,
+                           Model model) {
         List<Task> tasks;
         if (assigneeId == null && lessThanDayBeforeDueDate == null) {
             tasks = this.service.listAll();
         } else {
             tasks = this.service.filter(assigneeId, lessThanDayBeforeDueDate);
         }
-        return "";
+
+        model.addAttribute("tasks",tasks);
+        model.addAttribute("categories",TaskCategory.values());
+        model.addAttribute("users",userService.listAll());
+
+        return "list";
     }
 
     /**
@@ -47,8 +55,12 @@ public class TaskController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/tasks/add")
+    public String showAdd(Model model) {
+        model.addAttribute("categories",TaskCategory.values());
+        model.addAttribute("users",userService.listAll());
+
+        return "form";
     }
 
     /**
@@ -58,9 +70,16 @@ public class TaskController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id)
-    {
-        return "";
+    @GetMapping("/tasks/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+
+        model.addAttribute("taskEdit",service.findById(id));
+
+        model.addAttribute("categories",TaskCategory.values());
+        model.addAttribute("users",userService.listAll());
+
+        return "form";
     }
 
     /**
@@ -70,10 +89,14 @@ public class TaskController {
      *
      * @return The view "list.html".
      */
-    public String create(String title,String description,TaskCategory category,List<Long> assignees,String dueDate)
-    {
+    @PostMapping("/tasks")
+    public String create(@RequestParam String title,
+                         @RequestParam String description,
+                         @RequestParam TaskCategory category,
+                         @RequestParam List<Long> assignees,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) String dueDate) {
         this.service.create(title, description, category, assignees, LocalDate.parse(dueDate));
-        return "";
+        return "redirect:/tasks";
     }
 
     /**
@@ -83,9 +106,14 @@ public class TaskController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id,String title,String description,TaskCategory category,List<Long> assignees) {
+    @PostMapping("/tasks/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String title,
+                         @RequestParam String description,
+                         @RequestParam TaskCategory category,
+                         @RequestParam List<Long> assignees) {
         this.service.update(id, title, description, category, assignees);
-        return "";
+        return "redirect:/tasks";
     }
 
     /**
@@ -95,9 +123,10 @@ public class TaskController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/tasks/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.service.delete(id);
-        return "";
+        return "redirect:/tasks";
     }
 
     /**
@@ -107,8 +136,9 @@ public class TaskController {
      *
      * @return The view "list.html".
      */
-    public String markDone(Long id) {
+    @PostMapping("/tasks/{id}/mark_done")
+    public String markDone(@PathVariable Long id) {
         this.service.markDone(id);
-        return "";
+        return "redirect:/tasks";
     }
 }

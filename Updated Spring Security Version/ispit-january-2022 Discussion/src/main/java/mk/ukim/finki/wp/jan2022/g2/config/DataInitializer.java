@@ -1,16 +1,18 @@
 package mk.ukim.finki.wp.jan2022.g2.config;
 
+import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.jan2022.g2.model.DiscussionTag;
 import mk.ukim.finki.wp.jan2022.g2.model.User;
 import mk.ukim.finki.wp.jan2022.g2.service.DiscussionService;
 import mk.ukim.finki.wp.jan2022.g2.service.UserService;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
+@Component
 public class DataInitializer {
 
     private final UserService userService;
@@ -28,7 +30,7 @@ public class DataInitializer {
         return DiscussionTag.FINANCE;
     }
 
-
+    @PostConstruct
     public void initData() {
         this.userService.create("user" + 0, "pass" + 0, "ROLE_MASTER");
         for (int i = 1; i < 6; i++) {

@@ -1,5 +1,8 @@
 package mk.ukim.finki.wp.sep2022.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Match {
 
     public Match() {
@@ -14,6 +17,8 @@ public class Match {
         this.follows = 0;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -22,8 +27,10 @@ public class Match {
 
     private Double price;
 
+    @Enumerated(EnumType.STRING)
     private MatchType type;
 
+    @ManyToOne
     private MatchLocation location;
 
     private Integer follows = 0;
