@@ -4,10 +4,18 @@ import mk.ukim.finki.wp.kol2022.g2.model.Student;
 import mk.ukim.finki.wp.kol2022.g2.model.StudentType;
 import mk.ukim.finki.wp.kol2022.g2.service.StudentService;
 import mk.ukim.finki.wp.kol2022.g2.service.CourseService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class StudentController {
 
     private final StudentService service;
@@ -25,14 +33,21 @@ public class StudentController {
      *
      * @return The view "list.html".
      */
-    public String showList(Long courseId, Integer yearsOfStudying) {
+    @GetMapping(path = {"/","/students"})
+    public String showList(@RequestParam(required = false) Long courseId,
+                           @RequestParam(required = false)Integer yearsOfStudying,
+                           Model model) {
         List<Student> students;
         if (courseId == null && yearsOfStudying == null) {
             students = this.service.listAll();
         } else {
             students = this.service.filter(courseId, yearsOfStudying);
         }
-        return "";
+
+        model.addAttribute("students",students);
+        model.addAttribute("courses",courseService.listAll());
+
+        return "list";
     }
 
     /**
@@ -41,8 +56,11 @@ public class StudentController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/students/add")
+    public String showAdd(Model model) {
+        model.addAttribute("courses",courseService.listAll());
+        model.addAttribute("types",StudentType.values());
+        return "form";
     }
 
     /**
@@ -52,8 +70,13 @@ public class StudentController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        return "";
+    @GetMapping("/students/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+        model.addAttribute("courses",courseService.listAll());
+        model.addAttribute("types",StudentType.values());
+        model.addAttribute("student",service.findById(id));
+        return "form";
     }
 
     /**
@@ -63,14 +86,15 @@ public class StudentController {
      *
      * @return The view "list.html".
      */
-    public String create(String name,
-                         String email,
-                         String password,
-                         StudentType type,
-                         List<Long> coursesId,
-                         LocalDate enrollmentDate) {
+    @PostMapping("/students")
+    public String create(@RequestParam String name,
+                         @RequestParam String email,
+                         @RequestParam String password,
+                         @RequestParam StudentType type,
+                         @RequestParam List<Long> coursesId,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enrollmentDate) {
         this.service.create(name, email, password, type, coursesId, enrollmentDate);
-        return "";
+        return "redirect:/students";
     }
 
     /**
@@ -80,15 +104,16 @@ public class StudentController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id,
-                         String name,
-                         String email,
-                         String password,
-                         StudentType type,
-                         List<Long> coursesId,
-                         LocalDate enrollmentDate) {
+    @PostMapping("/students/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String name,
+                         @RequestParam String email,
+                         @RequestParam String password,
+                         @RequestParam StudentType type,
+                         @RequestParam List<Long> coursesId,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate enrollmentDate) {
         this.service.update(id, name, email, password, type, coursesId, enrollmentDate);
-        return "";
+        return "redirect:/students";
     }
 
     /**
@@ -98,8 +123,9 @@ public class StudentController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/students/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.service.delete(id);
-        return "";
+        return "redirect:/students";
     }
 }

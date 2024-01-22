@@ -5,12 +5,15 @@ import mk.ukim.finki.wp.kol2022.g1.model.EmployeeType;
 import mk.ukim.finki.wp.kol2022.g1.model.Skill;
 import mk.ukim.finki.wp.kol2022.g1.service.EmployeeService;
 import mk.ukim.finki.wp.kol2022.g1.service.SkillService;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
 public class DataInitializer {
 
     private final SkillService skillService;
@@ -28,6 +31,7 @@ public class DataInitializer {
         return EmployeeType.REGULAR;
     }
 
+    @PostConstruct
     public void initData() {
         for (int i = 1; i < 6; i++) {
             this.skillService.create("Skill: " + i);

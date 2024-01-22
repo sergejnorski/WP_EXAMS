@@ -2,13 +2,23 @@ package mk.ukim.finki.wp.kol2023.g1.web;
 
 import mk.ukim.finki.wp.kol2023.g1.model.PlayerPosition;
 import mk.ukim.finki.wp.kol2023.g1.service.PlayerService;
+import mk.ukim.finki.wp.kol2023.g1.service.TeamService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class PlayersController {
 
     private final PlayerService playerService;
+    private final TeamService teamService;
 
-    public PlayersController(PlayerService playerService) {
+    public PlayersController(PlayerService playerService, TeamService teamService) {
         this.playerService = playerService;
+        this.teamService = teamService;
     }
 
     /**
@@ -23,13 +33,19 @@ public class PlayersController {
      * @param position
      * @return The view "list.html".
      */
-    public String showPlayers(Double pointsPerGame, PlayerPosition position) {
+    @GetMapping(path = {"/", "/players"})
+    public String showPlayers(@RequestParam(required = false) Double pointsPerGame,
+                              @RequestParam(required = false)PlayerPosition position,
+                              Model model) {
         if (pointsPerGame == null && position == null) {
-            this.playerService.listAllPlayers();
+            model.addAttribute("players",this.playerService.listAllPlayers());
         } else {
-            this.playerService.listPlayersWithPointsLessThanAndPosition(pointsPerGame, position);
+            model.addAttribute("players",this.playerService.listPlayersWithPointsLessThanAndPosition(pointsPerGame, position));
         }
-        return "";
+
+        model.addAttribute("positions",PlayerPosition.values());
+
+        return "list";
     }
 
     /**
@@ -38,8 +54,11 @@ public class PlayersController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/players/add")
+    public String showAdd(Model model) {
+        model.addAttribute("positions",PlayerPosition.values());
+        model.addAttribute("teams",teamService.listAll());
+        return "form";
     }
 
     /**
@@ -49,9 +68,13 @@ public class PlayersController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        this.playerService.findById(id);
-        return "";
+    @GetMapping("/players/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+        model.addAttribute("positions", PlayerPosition.values());
+        model.addAttribute("teams", teamService.listAll());
+        model.addAttribute("player", this.playerService.findById(id));
+        return "form";
     }
 
     /**
@@ -61,9 +84,14 @@ public class PlayersController {
      *
      * @return The view "list.html".
      */
-    public String create(String name, String bio, Double pointsPerGame, PlayerPosition position, Long team) {
+    @PostMapping("/players")
+    public String create(@RequestParam String name,
+                         @RequestParam String bio,
+                         @RequestParam Double pointsPerGame,
+                         @RequestParam PlayerPosition position,
+                         @RequestParam Long team) {
         this.playerService.create(name, bio, pointsPerGame, position, team);
-        return "";
+        return "redirect:/players";
     }
 
     /**
@@ -73,9 +101,15 @@ public class PlayersController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id, String name, String bio, Double pointsPerGame, PlayerPosition position, Long team) {
+    @PostMapping("/players/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String name,
+                         @RequestParam String bio,
+                         @RequestParam Double pointsPerGame,
+                         @RequestParam PlayerPosition position,
+                         @RequestParam Long team) {
         this.playerService.update(id, name, bio, pointsPerGame, position, team);
-        return "";
+        return "redirect:/players";
     }
 
     /**
@@ -85,9 +119,10 @@ public class PlayersController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/players/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.playerService.delete(id);
-        return "";
+        return "redirect:/players";
     }
 
     /**
@@ -97,8 +132,9 @@ public class PlayersController {
      *
      * @return The view "list.html".
      */
-    public String vote(Long id) {
+    @PostMapping("/players/{id}/vote")
+    public String vote(@PathVariable Long id) {
         this.playerService.vote(id);
-        return "";
+        return "redirect:/players";
     }
 }

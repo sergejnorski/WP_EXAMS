@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+
+<div>
+    <!-- The form below should invoke the method VirtualServerController.showNews -->
+    <form id="filter-form">
+        <label for="f1">Launched in days: </label>
+        <input id="f1" type="number"/>
+        <label for="f2">Owner</label>
+        <select id="f2">
+            <option value="">All</option>
+            <!-- For each user you should have one <option> like below  -->
+            <option> [user.username]</option>
+        </select>
+        <button id="filter" type="submit">Filter</button>
+    </form>
+    <div>
+        <!-- VirtualServerController.showAdd (Only SYSADMIN can see this element)-->
+        <a href="" class="add-item">
+            Add
+        </a>
+    </div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>IPAddress</th>
+            <th>OSType</th>
+            <th>Owners</th>
+            <th>Actions</th>
+        </tr>
+        <!-- For each VirtualServers you should have one <tr> like below -->
+        <tr class="item">
+            <td>[VirtualServer.name]</td>
+            <td>[VirtualServer.ipaddress]</td>
+            <td>[VirtualServer.ostype]</td>
+            <td>
+                <!-- For each of the virtualserver.owners show the following element-->
+                <span class="item-rel"> [owner.username]</span>
+            </td>
+            <td>
+                <!-- VirtualServerController.delete (Only SYSADMIN can see this element)-->
+                <form>
+                    <button type="submit" class="delete-item">Delete</button>
+                </form>
+                <!-- VirtualServerController.showEdit (Only SYSADMIN can see this element)-->
+                <a class="edit-item">Edit</a>
+
+                <!-- VirtualServerController.markTerminated (Visible only when the virtual server is not terminated)-->
+                <form>
+                    <button class="change-item">Terminate</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+</body>
+</html>

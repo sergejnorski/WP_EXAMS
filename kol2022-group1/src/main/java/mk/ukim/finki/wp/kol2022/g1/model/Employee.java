@@ -1,9 +1,11 @@
 package mk.ukim.finki.wp.kol2022.g1.model;
 
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Employee {
 
     public Employee() {
@@ -18,6 +20,8 @@ public class Employee {
         this.employmentDate = employmentDate;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private LocalDate employmentDate;
@@ -28,8 +32,10 @@ public class Employee {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private EmployeeType type;
 
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Skill> skills;
 
     public Long getId() {

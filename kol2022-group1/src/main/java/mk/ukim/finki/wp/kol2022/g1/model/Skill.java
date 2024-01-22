@@ -1,6 +1,11 @@
 package mk.ukim.finki.wp.kol2022.g1.model;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Skill {
 
     public Skill() {
@@ -10,6 +15,8 @@ public class Skill {
         this.name = name;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String name;

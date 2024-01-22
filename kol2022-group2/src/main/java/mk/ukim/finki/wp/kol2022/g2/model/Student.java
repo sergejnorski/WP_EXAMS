@@ -1,8 +1,10 @@
 package mk.ukim.finki.wp.kol2022.g2.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Student {
 
     public Student() {
@@ -17,6 +19,8 @@ public class Student {
         this.enrollmentDate = enrollmentDate;
     }
 
+    @Id
+    @GeneratedValue
     private Long id;
 
     private LocalDate enrollmentDate;
@@ -27,8 +31,10 @@ public class Student {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private StudentType type;
 
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Course> courses;
 
     public Long getId() {

@@ -1,8 +1,13 @@
 package mk.ukim.finki.wp.kol2023.g1.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *  This class is used to configure user login on path '/login' and logout on path '/logout'.
@@ -25,15 +30,64 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *      role: "ROLE_ADMIN"
  *  }]
  */
+
+// TODO: This is solved with EXPIRED Spring Security Version - version 5
+
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final PasswordEncoder passwordEncoder;
+
+    public SecurityConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/h2**"); // do not remove this line
 
         // TODO: If you are implementing the security requirements, remove this following line
-        web.ignoring().antMatchers("/**");
+        //web.ignoring().antMatchers("/**");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/","/players").permitAll()
+                .antMatchers("/players/*/vote").hasRole("USER")
+                .antMatchers("/players/**").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .failureUrl("/login?error=BadCredentials")
+                .defaultSuccessUrl("/players", true)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/");
 
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password(passwordEncoder.encode("user"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin"))
+                .authorities("ROLE_ADMIN");
+    }
+
+
+
 }

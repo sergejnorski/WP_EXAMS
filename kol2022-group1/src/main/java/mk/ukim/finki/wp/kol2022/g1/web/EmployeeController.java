@@ -4,10 +4,18 @@ import mk.ukim.finki.wp.kol2022.g1.model.Employee;
 import mk.ukim.finki.wp.kol2022.g1.model.EmployeeType;
 import mk.ukim.finki.wp.kol2022.g1.service.EmployeeService;
 import mk.ukim.finki.wp.kol2022.g1.service.SkillService;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Controller
 public class EmployeeController {
 
     private final EmployeeService service;
@@ -25,14 +33,21 @@ public class EmployeeController {
      *
      * @return The view "list.html".
      */
-    public String showList(Long skillId, Integer yearsOfService) {
+    @GetMapping(path = {"/","/employees"})
+    public String showList(@RequestParam(required = false) Long skillId,
+                           @RequestParam(required = false)Integer yearsOfService,
+                           Model model) {
         List<Employee> employees;
         if (skillId == null && yearsOfService == null) {
             employees = this.service.listAll();
         } else {
             employees = this.service.filter(skillId, yearsOfService);
         }
-        return "";
+
+        model.addAttribute("employees",employees);
+        model.addAttribute("skills",skillService.listAll());
+
+        return "list";
     }
 
     /**
@@ -41,8 +56,11 @@ public class EmployeeController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/employees/add")
+    public String showAdd(Model model) {
+        model.addAttribute("skills",skillService.listAll());
+        model.addAttribute("types",EmployeeType.values());
+        return "form";
     }
 
     /**
@@ -52,8 +70,12 @@ public class EmployeeController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        return "";
+    @GetMapping("/employees/{id}/edit")
+    public String showEdit(@PathVariable Long id, Model model) {
+        model.addAttribute("skills",skillService.listAll());
+        model.addAttribute("types",EmployeeType.values());
+        model.addAttribute("employee",service.findById(id));
+        return "form";
     }
 
     /**
@@ -63,14 +85,15 @@ public class EmployeeController {
      *
      * @return The view "list.html".
      */
-    public String create(String name,
-                         String email,
-                         String password,
-                         EmployeeType type,
-                         List<Long> skillId,
-                         LocalDate employmentDate) {
+    @PostMapping("/employees")
+    public String create(@RequestParam String name,
+                         @RequestParam String email,
+                         @RequestParam String password,
+                         @RequestParam EmployeeType type,
+                         @RequestParam List<Long> skillId,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate employmentDate) {
         this.service.create(name, email, password, type, skillId, employmentDate);
-        return "";
+        return "redirect:/employees";
     }
 
     /**
@@ -80,15 +103,16 @@ public class EmployeeController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id,
-                         String name,
-                         String email,
-                         String password,
-                         EmployeeType type,
-                         List<Long> skillId,
-                         LocalDate employmentDate) {
+    @PostMapping("/employees/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String name,
+                         @RequestParam String email,
+                         @RequestParam String password,
+                         @RequestParam EmployeeType type,
+                         @RequestParam List<Long> skillId,
+                         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate employmentDate) {
         this.service.update(id, name, email, password, type, skillId, employmentDate);
-        return "";
+        return "redirect:/employees";
     }
 
     /**
@@ -98,8 +122,9 @@ public class EmployeeController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/employees/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.service.delete(id);
-        return "";
+        return "redirect:/employees";
     }
 }

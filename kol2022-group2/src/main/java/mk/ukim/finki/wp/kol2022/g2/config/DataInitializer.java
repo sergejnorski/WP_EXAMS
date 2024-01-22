@@ -5,12 +5,16 @@ import mk.ukim.finki.wp.kol2022.g2.model.Course;
 import mk.ukim.finki.wp.kol2022.g2.model.StudentType;
 import mk.ukim.finki.wp.kol2022.g2.service.StudentService;
 import mk.ukim.finki.wp.kol2022.g2.service.CourseService;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Component
 public class DataInitializer {
 
     private final CourseService courseService;
@@ -28,6 +32,7 @@ public class DataInitializer {
         return StudentType.UNDERGRADUATE;
     }
 
+    @PostConstruct
     public void initData() {
         for (int i = 1; i < 6; i++) {
             this.courseService.create("Course: " + i);

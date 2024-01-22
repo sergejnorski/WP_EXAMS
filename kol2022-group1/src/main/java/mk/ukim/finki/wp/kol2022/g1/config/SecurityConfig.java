@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.kol2022.g1.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * <p>
  * For login the employees from the database should be used, where username should be the email.
  */
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 

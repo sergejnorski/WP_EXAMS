@@ -7,20 +7,20 @@
 
 <div>
     <!-- The form below should invoke the method MoviesController.showMovies -->
-    <form id="filter-form">
+    <form id="filter-form" method="get" action="/">
         <label for="rating">Rating</label>
-        <input id="rating" type="number" name=""/>
+        <input id="rating" type="number" name="rating"/>
         <label for="genre">Genre</label>
-        <select id="genre" name="">
+        <select id="genre" name="genre">
             <option value="">All</option>
             <!-- For each genre you should have one <option> like below  -->
-            <option value="[genre]"> [genre.name]</option>
+            <option th:each="genre : ${genres}" th:text="${genre}" th:value="${genre}"></option>
         </select>
         <button id="filter" type="submit">Filter</button>
     </form>
     <div>
         <!-- MoviesController.showAdd -->
-        <a href="" class="add-item">
+        <a href="/movies/add" class="add-item">
             Add new movie
         </a>
     </div>
@@ -35,22 +35,22 @@
             <th>Actions</th>
         </tr>
         <!-- For each movie you should have one <tr> like below -->
-        <tr class="item">
-            <td>[movie.name]</td>
-            <td>[movie.description]</td>
-            <td>[movie.rating]</td>
-            <td>[movie.genre]</td>
-            <td>[movie.director]</td>
-            <td>[movie.votes]</td>
+        <tr class="item" th:each="movie : ${movies}">
+            <td th:text="${movie.name}"></td>
+            <td th:text="${movie.description}"></td>
+            <td th:text="${movie.rating}"></td>
+            <td th:text="${movie.genre}"></td>
+            <td th:text="${movie.director}"></td>
+            <td th:text="${movie.votes}"></td>
             <td>
                 <!-- MoviesController.delete -->
-                <form>
+                <form method="post" th:action="@{'/movies/{id}/delete' (id=${movie.id})}">
                     <button type="submit" class="delete-item">Delete</button>
                 </form>
                 <!-- MoviesController.showEdit -->
-                <a href="" class="edit-item">Edit</a>
+                <a th:href="@{'/movies/{id}/edit' (id=${movie.id})}" class="edit-item">Edit</a>
                 <!-- MoviesController.vote -->
-                <form>
+                <form method="post" th:action="@{'/movies/{id}/vote' (id=${movie.id})}">
                     <button type="submit" class="like-item">Vote for Movie</button>
                 </form>
             </td>

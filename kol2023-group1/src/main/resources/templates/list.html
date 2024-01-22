@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>WP Exam</title>
 </head>
@@ -7,20 +7,20 @@
 
 <div>
     <!-- The form below should invoke the method PlayersController.showPlayers -->
-    <form id="filter-form">
+    <form id="filter-form" method="get" action="/">
         <label for="pointsPerGame">Points Per Game</label>
-        <input id="pointsPerGame" type="number" name=""/>
+        <input id="pointsPerGame" type="number" name="pointsPerGame"/>
         <label for="position">Position</label>
-        <select id="position" name="">
+        <select id="position" name="position">
             <option value="">All</option>
             <!-- For each position you should have one <option> like below  -->
-            <option value="[position]"> [position.name]</option>
+            <option th:each="position : ${positions}" th:text="${position}" th:value="${position}"></option>
         </select>
         <button id="filter" type="submit">Filter</button>
     </form>
     <div>
         <!-- PlayersController.showAdd -->
-        <a href="" class="add-item">
+        <a href="/players/add" class="add-item" sec:authorize="hasRole('ADMIN')">
             Add new player
         </a>
     </div>
@@ -35,22 +35,22 @@
             <th>Actions</th>
         </tr>
         <!-- For each player you should have one <tr> like below -->
-        <tr class="item">
-            <td>[player.name]</td>
-            <td>[player.bio]</td>
-            <td>[player.pointsPerGame]</td>
-            <td>[player.position]</td>
-            <td>[player.team]</td>
-            <td>[player.votes]</td>
+        <tr class="item" th:each="player : ${players}">
+            <td th:text="${player.name}"></td>
+            <td th:text="${player.bio}">[player.bio]</td>
+            <td th:text="${player.pointsPerGame}"></td>
+            <td th:text="${player.position}"></td>
+            <td th:text="${player.team}"></td>
+            <td th:text="${player.votes}"></td>
             <td>
                 <!-- PlayersController.delete -->
-                <form>
+                <form method="post" th:action="@{'/players/{id}/delete' (id=${player.id})}"  sec:authorize="hasRole('ADMIN')">
                     <button type="submit" class="delete-item">Delete</button>
                 </form>
                 <!-- PlayersController.showEdit -->
-                <a href="" class="edit-item">Edit</a>
+                <a th:href="@{'/players/{id}/edit' (id=${player.id})}" class="edit-item" sec:authorize="hasRole('ADMIN')">Edit</a>
                 <!-- PlayersController.vote -->
-                <form>
+                <form method="post" th:action="@{'/players/{id}/vote' (id=${player.id})}" sec:authorize="hasRole('USER')">
                     <button type="submit" class="like-item">Vote for Player</button>
                 </form>
             </td>

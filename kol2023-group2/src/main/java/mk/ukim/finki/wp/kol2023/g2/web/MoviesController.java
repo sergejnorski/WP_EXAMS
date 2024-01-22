@@ -1,14 +1,24 @@
 package mk.ukim.finki.wp.kol2023.g2.web;
 
 import mk.ukim.finki.wp.kol2023.g2.model.Genre;
+import mk.ukim.finki.wp.kol2023.g2.service.DirectorService;
 import mk.ukim.finki.wp.kol2023.g2.service.MovieService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class MoviesController {
 
     private final MovieService movieService;
+    private final DirectorService directorService;
 
-    public MoviesController(MovieService movieService) {
+    public MoviesController(MovieService movieService, DirectorService directorService) {
         this.movieService = movieService;
+        this.directorService = directorService;
     }
 
     /**
@@ -23,13 +33,19 @@ public class MoviesController {
      * @param genre
      * @return The view "list.html".
      */
-    public String showMovies(Double rating, Genre genre) {
+    @GetMapping(path = {"/","/movies"})
+    public String showMovies(@RequestParam(required = false) Double rating,
+                             @RequestParam(required = false) Genre genre,
+                             Model model) {
         if (rating == null && genre == null) {
-            this.movieService.listAllMovies();
+            model.addAttribute("movies",this.movieService.listAllMovies());
         } else {
-            this.movieService.listMoviesWithRatingLessThenAndGenre(rating, genre);
+            model.addAttribute(this.movieService.listMoviesWithRatingLessThenAndGenre(rating, genre));
         }
-        return "";
+
+        model.addAttribute("genres",Genre.values());
+
+        return "list";
     }
 
     /**
@@ -38,8 +54,12 @@ public class MoviesController {
      *
      * @return The view "form.html".
      */
-    public String showAdd() {
-        return "";
+    @GetMapping("/movies/add")
+    public String showAdd(Model model) {
+        model.addAttribute("directors", directorService.listAll());
+        model.addAttribute("genres", Genre.values());
+
+        return "form";
     }
 
     /**
@@ -49,9 +69,14 @@ public class MoviesController {
      *
      * @return The view "form.html".
      */
-    public String showEdit(Long id) {
-        this.movieService.findById(id);
-        return "";
+    @GetMapping("/movies/{id}/edit")
+    public String showEdit(@PathVariable Long id,
+                           Model model) {
+        model.addAttribute("directors", directorService.listAll());
+        model.addAttribute("genres", Genre.values());
+        model.addAttribute("movies",this.movieService.findById(id));
+
+        return "form";
     }
 
     /**
@@ -61,9 +86,14 @@ public class MoviesController {
      *
      * @return The view "list.html".
      */
-    public String create(String name, String description, Double rating, Genre genre, Long director) {
+    @PostMapping("/movies")
+    public String create(@RequestParam String name,
+                         @RequestParam String description,
+                         @RequestParam Double rating,
+                         @RequestParam Genre genre,
+                         @RequestParam Long director) {
         this.movieService.create(name, description, rating, genre, director);
-        return "";
+        return "redirect:/movies";
     }
 
     /**
@@ -73,9 +103,15 @@ public class MoviesController {
      *
      * @return The view "list.html".
      */
-    public String update(Long id, String name, String description, Double rating, Genre genre, Long director) {
+    @PostMapping("/movies/{id}")
+    public String update(@PathVariable Long id,
+                         @RequestParam String name,
+                         @RequestParam String description,
+                         @RequestParam Double rating,
+                         @RequestParam Genre genre,
+                         @RequestParam Long director) {
         this.movieService.update(id, name, description, rating, genre, director);
-        return "";
+        return "redirect:/movies";
     }
 
     /**
@@ -85,9 +121,10 @@ public class MoviesController {
      *
      * @return The view "list.html".
      */
-    public String delete(Long id) {
+    @PostMapping("/movies/{id}/delete")
+    public String delete(@PathVariable Long id) {
         this.movieService.delete(id);
-        return "";
+        return "redirect:/movies";
     }
 
     /**
@@ -97,8 +134,9 @@ public class MoviesController {
      *
      * @return The view "list.html".
      */
-    public String vote(Long id) {
+    @PostMapping("/movies/{id}/vote")
+    public String vote(@PathVariable Long id) {
         this.movieService.vote(id);
-        return "";
+        return "redirect:/movies";
     }
 }

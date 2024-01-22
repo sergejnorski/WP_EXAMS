@@ -7,20 +7,20 @@
 
 <div>
     <!-- The form below should invoke the method StudentController.showList -->
-    <form id="filter-form">
+    <form id="filter-form" method="get" action="/">
         <label for="f1">YearsOfStudying</label>
-        <input id="f1" type="number"/>
+        <input id="f1" type="number" name="yearsOfStudying"/>
         <label for="f2">Course</label>
-        <select id="f2">
+        <select id="f2" name="courseId">
             <option value="">All</option>
             <!-- For each course you should have one <option> like below  -->
-            <option> [course]</option>
+            <option th:each="course : ${courses}" th:text="${course.name}" th:value="${course.id}"></option>
         </select>
         <button id="filter" type="submit">Filter</button>
     </form>
     <div>
         <!-- CourseController.showAdd (Only ADMIN can see this element)-->
-            <a href="" class="add-item">
+            <a href="/students/add" class="add-item">
                 Add
             </a>
     </div>
@@ -33,21 +33,21 @@
             <th>Actions</th>
         </tr>
         <!-- For each student you should have one <tr> like below -->
-        <tr class="item">
-            <td>[student.name]</td>
-            <td>[student.email]</td>
-            <td>[student.type]</td>
+        <tr class="item" th:each="student : ${students}">
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.email}"></td>
+            <td th:text="${student.type}"></td>
             <td>
                 <!-- For each of the student.courses show the following element-->
-                <span class="item-rel"> [course.name]</span>
+                <span class="item-rel" th:each="course : ${student.courses}" th:text="${course.name}"> [course.name]</span>
             </td>
             <td>
                     <!-- StudentController.delete (Only ADMIN can see this element)-->
-                    <form>
+                    <form method="post" th:action="@{'/students/{id}/delete' (id = ${student.id})}">
                         <button type="submit" class="delete-item">Delete</button>
                     </form>
                     <!-- StudentController.showEdit (Only ADMIN can see this element)-->
-                    <a class="edit-item">Edit</a>
+                    <a class="edit-item" th:href="@{'/students/{id}/edit' (id = ${student.id})}">Edit</a>
             </td>
         </tr>
     </table>

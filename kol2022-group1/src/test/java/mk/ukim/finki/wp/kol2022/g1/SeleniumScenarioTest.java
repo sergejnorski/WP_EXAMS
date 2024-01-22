@@ -39,7 +39,7 @@ public class SeleniumScenarioTest {
 
     static {
         SubmissionHelper.exam = "wp-kol-2022-g1";
-        SubmissionHelper.index = "TODO";
+        SubmissionHelper.index = "213168";
     }
 
     @Autowired

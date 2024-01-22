@@ -6,40 +6,44 @@
 <body>
 <!-- The form should submit to PlayersController.create or PlayersController.update,
      depending on whether we are creating or editing a player -->
-<form>
+<form method="post" th:action="${player != null} ? @{'/players/{id}' (id = ${player.id})} : '/players'">
     <div>
         <label for="name">Name</label>
         <input type="text"
                id="name"
-               name=""
+               name="name"
+               th:value="${player?.name}"
                required>
     </div>
     <div>
         <label for="bio">Biography</label>
         <input type="text"
                id="bio"
-               name=""
+               name="bio"
+               th:value="${player?.bio}"
                required>
     </div>
     <div>
         <label for="pointsPerGame">Points Per Game</label>
         <input type="number"
                id="pointsPerGame"
-               name=""
+               name="pointsPerGame"
+               th:value="${player?.pointsPerGame}"
                required>
     </div>
     <div>
         <label>Player Position</label><br/>
-        <select id="position" name="" multiple="multiple" size="5">
+        <select id="position" name="position" multiple="multiple" size="5">
             <!-- For each position you should have one <option> like below  -->
-            <option value="[position]"> [position.name]</option>
+            <option th:each="position : ${positions}" th:text="${position}" th:value="${position}"
+            th:selected="${position} == ${player?.position}"></option>
         </select>
     </div>
     <div>
         <label>Team</label><br/>
-        <select id="team" name="" multiple="multiple" size="5">
+        <select id="team" name="team" multiple="multiple" size="5">
             <!-- For each team you should have one <option> like below  -->
-            <option value="[team.id]"> [team.name]</option>
+            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}" th:selected="${team.id} == ${player?.team?.id}"></option>
         </select>
     </div>
 
